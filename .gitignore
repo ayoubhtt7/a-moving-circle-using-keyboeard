@@ -1,52 +1,45 @@
-# Prerequisites
-*.d
+#include <graphics.h>
+#include <conio.h>
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
+#define CIRCLE_RADIUS 50
 
-# Linker output
-*.ilk
-*.map
-*.exp
+int main() {
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "");
 
-# Precompiled Headers
-*.gch
-*.pch
+    int x = SCREEN_WIDTH / 2;
+    int y = SCREEN_HEIGHT / 2;
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+    while (1) {
+        if (kbhit()) {
+            char ch = getch();
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+            switch (ch) {
+                case 'a':
+                    x -= 10;
+                    break;
+                case 'd':
+                    x += 10;
+                    break;
+                case 'w':
+                    y -= 10;
+                    break;
+                case 's':
+                    y += 10;
+                    break;
+                case 27:
+                    closegraph();
+                    return 0;
+            }
+        }
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+        cleardevice();
+        setcolor(WHITE);
+        circle(x, y, CIRCLE_RADIUS);
+        delay(10);
+    }
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+    return 0;
+}
